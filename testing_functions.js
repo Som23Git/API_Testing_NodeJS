@@ -42,4 +42,13 @@ const okitsnotfunction = (users) => {
 //Calling the function
 okitsnotfunction(namers);
 
+let okitsfunction = (x,y) => {
+    var sum = x * y * x;
+    console.log(sum);
+    return sum;
+};
+
+okitsfunction(28,21);
+
+
 
