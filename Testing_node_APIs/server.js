@@ -1,6 +1,6 @@
 const http = require('http');
 // const products = require('./data.json')
-const { getProducts } = require('./controllers/productController');
+const { getProducts, getProduct, createProduct } = require('./controllers/productController');
 
 // const server1 = http.createServer(function(req,res){
 //     res.statusCode = 200;
@@ -21,12 +21,12 @@ const { getProducts } = require('./controllers/productController');
 
 const server = http.createServer(function(req,res){
     if(req.url === '/api/products' && req.method === 'GET' ){
-        getProducts(req,res)
-    } else if (req.url.match(/\/api\/products\/([0-9]+)/) && req.method === 'GET' ){
-        
+        getProducts(req,res);
+    } else if(req.url.match(/\/api\/products\/([0-9]+)/) && req.method === 'GET' ){
         const id = req.url.split('/')[3]
-        getProducts(req,res,id)
-
+        getProduct(req,res,id);
+    } else if(req.url === '/api/products' && req.method === 'POST'){
+        createProduct(req,res);
     } else {
         res.writeHead(404, 'Not Found', {'Content-Type': 'application/json'})
         res.end(JSON.stringify({Message: 'Try Again, the Route Not Found'}));
