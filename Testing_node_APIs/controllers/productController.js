@@ -1,4 +1,5 @@
 const Product = require('../models/productModel')
+const { getPostData } = require('../utils.js');
 
 
 // @desc Gets All Products from DB
@@ -34,15 +35,39 @@ async function getProduct(req, res, id){
 }
 
 
-// @desc Create a Product
+// @desc Creates a Static Product using hardcoded values.
 // @route POST /api/products
+
+// async function createProduct(req, res){
+//     try{
+//         const product = {
+//             title: 'Test Product',
+//             desc: 'This is my product',
+//             price: 100
+//         }
+        
+//         const newProduct = await Product.create(product);
+//         res.writeHead(201, 'Created', {'Content-Type':'application/json'})
+//         return res.end(JSON.stringify(newProduct));
+
+//     } catch(error){
+//         console.log(error);
+//     }
+// }
+
 async function createProduct(req, res){
     try{
+        
+        const body = await getPostData(req)
+
+        const { title, description, price } = JSON.parse(body)
+
         const product = {
-            title: 'Test Product',
-            desc: 'This is my product',
-            price: 100
+            title,
+            description,
+            price
         }
+        
         const newProduct = await Product.create(product);
         res.writeHead(201, 'Created', {'Content-Type':'application/json'})
         return res.end(JSON.stringify(newProduct));
